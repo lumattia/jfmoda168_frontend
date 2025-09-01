@@ -1,0 +1,54 @@
+
+/* 🔹 大图预览模态层 */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+.modal-img {
+  max-width: 90%;
+  max-height: 90%;
+  border: 4px solid white;
+  border-radius: 6px;
+}
+/* 公共按钮样式 */
+.action-btn {
+  padding: 0.5rem 1.25rem;  /* px-5 py-2 */
+  border-radius: 0.5rem;    /* rounded */
+  font-weight: bold;         /* font-bold */
+  font-size: 1.125rem;       /* text-lg */
+  transition: all 0.2s ease;/* 平滑过渡 */
+  cursor: pointer;
+  border: none;
+}
+
+/* 入库选中状态 */
+.action-btn.add-selected {
+  background-color: #2563eb; /* 蓝色 */
+  color: white;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.7); /* glow */
+  transform: scale(1.05);
+}
+
+/* 出库选中状态 */
+.action-btn.remove-selected {
+  background-color: #dc2626; /* 红色 */
+  color: white;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.7);
+  transform: scale(1.05);
+}
+
+/* 未选中状态 */
+.action-btn.unselected {
+  background-color: #e5e7eb; /* 灰色 */
+  color: #6b7280;            /* 暗灰文字 */
+  box-shadow: none;
+  transform: scale(1);
+}

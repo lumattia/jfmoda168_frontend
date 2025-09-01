@@ -1,0 +1,17 @@
+<div class="container" *ngIf="isLoggedIn">
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="header">
+      <h1>时装仓库管理系统</h1>
+      <div class="user-info">
+        <img src="https://ui-avatars.com/api/?name=管理员&background=3498db&color=fff" alt="用户头像">
+        <span>管理员</span>
+        <button style="margin-left: 15px;" (click)="logout()"><i class="fas fa-sign-out-alt"></i> 退出</button>
+      </div>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<app-login *ngIf="!isLoggedIn"></app-login>

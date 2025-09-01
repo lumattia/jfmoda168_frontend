@@ -1,0 +1,48 @@
+<div class="col">
+  <form class="d-flex" role="search">
+    <input class="form-control me-2" [(ngModel)]="searchTerm" name="searchTerm" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" (click)="pageChanged()" type="submit">查找</button>
+  </form>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th class="text-nowrap" (click)="onSort('code')">
+      产品型号 <i *ngIf="sortColumn === 'code';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'"></i>
+    </th>
+    <th class="text-nowrap" (click)="onSort('name')">
+      产品名称 <i *ngIf="sortColumn === 'name';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'"></i>
+    </th>
+    <th class="text-nowrap">
+      布料类型
+    </th>
+    <th class="text-nowrap">
+      颜色选项
+    </th>
+    <th class="text-nowrap" (click)="onSort('totalStock')">
+      总库存 <i *ngIf="sortColumn === 'totalStock';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>
+    </th>
+    <ng-template #sort>
+      <i class="fas fa-sort"></i>
+    </ng-template>
+    <th class="text-end"><a [routerLink]="['new']"><i class="fa-solid fa-plus"></i></a></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let product of products" [routerLink]="[product.id]">
+    <td class="overflow-hidden">{{product.code}}</td>
+    <td class="overflow-hidden">{{product.name}}</td>
+    <td class="overflow-hidden">{{product.materials}}</td>
+    <td class="overflow-hidden">{{product.colors}}</td>
+    <td class="overflow-hidden">{{product.totalStock}}</td>
+    <td class="text-nowrap">
+      <div class="text-end">
+        <a class="p-1" [routerLink]="[product.id]">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="size" (pageChange)="pageChanged()"/>

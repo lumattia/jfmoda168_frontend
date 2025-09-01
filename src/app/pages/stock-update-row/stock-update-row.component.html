@@ -1,0 +1,33 @@
+<ng-container [formGroup]="rowForm">
+    <!-- Product Autocomplete -->
+    <td>
+        <p-autocomplete [dropdown]="true" [suggestions]="filteredProducts" (completeMethod)="filterProduct($event)" optionValue="name"
+            optionLabel="name" (onSelect)="onProductChange($event)"/>
+    </td>
+
+    <!-- Material Autocomplete -->
+    <td>
+        <p-autocomplete [dropdown]="true" [suggestions]="filteredMaterial" (completeMethod)="filterMaterial($event)" optionValue="name"
+            optionLabel="name" (onSelect)="onMaterialChange($event)" [disabled]="!selectedProduct"/>
+    </td>
+
+    <!-- Color Autocomplete -->
+    <td>
+            <p-autocomplete [dropdown]="true" [suggestions]="filteredColor" (completeMethod)="filterColor($event)" optionValue="name"
+            optionLabel="name" (onSelect)="onColorChange($event)" [disabled]="!selectedMaterial"/>
+    </td>
+
+    <!-- Amount -->
+    <td><input formControlName="amount" type="number" class="border p-1 w-16"></td>
+    <td>{{selectedColor?.stock ?? 0}}</td>
+
+    <!-- Photo -->
+    <td>
+        <img *ngIf="selectedColor?.photoPath" [src]="getControl('photoPath').value" class="img-thumbnail d-block mb-1 preview-img" width="100"
+            (click)="preview.emit(getControl('photoPath').value)">
+    </td>
+
+    <!-- Remove -->
+    <td>
+        <button type="button" (click)="remove.emit()">删除</button>
+    </td></ng-container>

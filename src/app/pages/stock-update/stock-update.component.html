@@ -1,0 +1,64 @@
+<div class="p-4 bg-white shadow rounded" [formGroup]="form">
+  <!-- 🔹 入库 / 出库选择 -->
+  <div class="mb-4 flex gap-2 items-center">
+<button type="button" 
+        class="action-btn" 
+        [ngClass]="action==='add' ? 'add-selected' : 'unselected'" 
+        (click)="action='add'">入库</button>
+
+<button type="button" 
+        class="action-btn" 
+        [ngClass]="action==='remove' ? 'remove-selected' : 'unselected'" 
+        (click)="action='remove'">出库</button>
+  </div>
+
+  <div class="mb-4">
+    <label class="font-semibold mr-2">日期:</label>
+    <input type="date" formControlName="date" class="border p-1 rounded" />
+  </div>
+
+  <table class="w-full border mb-4">
+    <thead class="bg-gray-100">
+      <tr>
+        <th>型号</th>
+        <th>布料</th>
+        <th>颜色</th>
+        <th>数量</th>
+        <th>当前库存</th>
+        <th>照片</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody formArrayName="items">
+           <tr app-stock-update-row
+      *ngFor="let row of itemGroups; let i = index"
+      [rowForm]="row"
+      [products]="products"
+      (remove)="removeRow(i)"
+      (preview)="openImage($event)"
+      >
+  </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="bg-green-500 text-white px-3 py-1 rounded mr-2" (click)="addRow()">+ 添加行</button>
+
+   <div class="mt-4">
+    <button type="button" 
+        class="action-btn" 
+        [ngClass]="action==='add' ? 'add-selected' : 'unselected'" 
+        (click)="action='add'">入库</button>
+
+<button type="button" 
+        class="action-btn" 
+        [ngClass]="action==='remove' ? 'remove-selected' : 'unselected'" 
+        (click)="action='remove'">出库</button>
+
+    <button type="button" class="bg-purple-600 text-white px-4 py-2 rounded" (click)="submit()">提交</button>
+  </div>
+</div>
+
+<!-- 🔹 大图预览 Modal -->
+<div class="image-modal" *ngIf="previewPhoto" (click)="closeImage()">
+    <img [src]="previewPhoto" class="modal-img">
+</div>
