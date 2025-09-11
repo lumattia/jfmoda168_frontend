@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location, NgFor, NgIf } from '@angular/common';
 import { ProductService } from '../../services/product.service';
@@ -21,8 +21,12 @@ export class ProductDetailComponent implements OnInit {
   productForm!: FormGroup;
   productId: number = 0;
   previewColor?: any; // 用来存放当前放大的图片
-
+  
+  mobileView:boolean=false;
   ngOnInit() {
+      this.checkMobile();
+
+  window.addEventListener('resize', () => this.checkMobile()); 
     this.route.params.subscribe(params => {
       this.productId = Number(params['id']) || 0;
       if (this.productId) {
@@ -34,7 +38,16 @@ export class ProductDetailComponent implements OnInit {
       }
     });
   }
-
+checkMobile() {
+  // Consideramos móvil si la pantalla tiene menos o igual a 1000px de ancho
+  this.mobileView = window.innerWidth <= 1000;
+}
+  getFormControlValue(control: string): any {
+    return this.productForm.get(control)?.value
+  }
+  getFormControl(group: FormGroup, control: string): any {
+    return group.get(control)
+  }
   initForm(product?: Product) {
     this.productForm = this.fb.group({
       id: [product?.id || null],

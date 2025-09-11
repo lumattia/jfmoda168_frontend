@@ -1,4 +1,5 @@
 <div *ngIf="productForm" [formGroup]="productForm" class="product-detail">
+ @if (!mobileView){
     <!-- 产品基础信息 -->
     <div class="row mb-2 align-items-center">
         <label class="col-2 col-form-label text-end">型号*</label>
@@ -65,10 +66,44 @@
         <button class="btn btn-success me-2" (click)="save()">保存</button>
         <button class="btn btn-secondary" (click)="cancel()">退出</button>
     </div>
-</div>
 
 <!-- 🔹 大图预览 Modal -->
 <div class="image-modal" *ngIf="previewColor" (click)="closeImage()">
     <img [src]="previewColor.value.photoPath" class="modal-img">
     <button type="button" (click)="removeColorPhoto()">删除</button>
+</div>
+} @else {
+    
+    <!-- 固定退出按钮 (右上角) -->
+    <button (click)="cancel()">退出</button>
+
+    <!-- 型号 & 名称 -->
+    <div class="mb-3 fw-bold fs-5">
+      {{ productForm.value.code }} | {{ productForm.value.name }}
+    </div>
+
+    <!-- 材料列表 -->
+    <ul class="list-group">
+      <li *ngFor="let material of materials.controls; let mi=index"
+          class="list-group-item">
+        <div class="fw-semibold text-primary">{{ material.value.name }}</div>
+
+        <!-- 颜色列表 -->
+        <ul class="list-unstyled ms-3 mt-2">
+          <li *ngFor="let color of colorsOf(mi).controls; let ci=index" class="mb-2">
+            <div>
+              <span class="fw-semibold">{{ color.value.name }}</span>
+              <span class="text-muted ms-2">{{ color.value.stock }}</span>
+            </div>
+            <img *ngIf="color.value.photoPath"
+                 [src]="color.value.photoPath"
+                 width="100"
+                 class="img-thumbnail mt-1"
+                 (click)="openImage(color)">
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <button (click)="cancel()">退出</button>
+}
 </div>
