@@ -66,12 +66,6 @@
         <button class="btn btn-success me-2" (click)="save()">保存</button>
         <button class="btn btn-secondary" (click)="cancel()">退出</button>
     </div>
-
-<!-- 🔹 大图预览 Modal -->
-<div class="image-modal" *ngIf="previewColor" (click)="closeImage()">
-    <img [src]="previewColor.value.photoPath" class="modal-img">
-    <button type="button" (click)="removeColorPhoto()">删除</button>
-</div>
 } @else {
     
     <!-- 固定退出按钮 (右上角) -->
@@ -106,4 +100,9 @@
     </ul>
     <button (click)="cancel()">退出</button>
 }
+</div>
+<!-- 🔹 大图预览 Modal -->
+<div class="image-modal" *ngIf="previewColor" (click)="closeImage()">
+    <img [src]="previewColor.value.photoPath" class="modal-img">
+    <button type="button" (click)="removeColorPhoto()">删除</button>
 </div>

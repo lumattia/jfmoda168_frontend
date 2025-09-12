@@ -17,9 +17,6 @@ export class SidebarComponent {
         window.addEventListener('resize', () => this.checkMobile());
     }
     checkMobile() {
-        // Consideramos móvil si la pantalla tiene menos o igual a 1000px de ancho
         this.mobileView = window.innerWidth <= 1000;
-        console.log(this.mobileView)
-        console.log(window.innerWidth)
     }
 }

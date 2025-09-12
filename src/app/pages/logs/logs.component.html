@@ -1,0 +1,98 @@
+<div class="row mb-3">
+  <div class="col-md-2">
+    <input class="form-control" placeholder="产品名" [(ngModel)]="filter.productCode" name="productCode">
+  </div>
+  <div class="col-md-2">
+    <input class="form-control" placeholder="材料名" [(ngModel)]="filter.materialName" name="materialName">
+  </div>
+  <div class="col-md-2">
+    <input class="form-control" placeholder="颜色" [(ngModel)]="filter.colorName" name="colorName">
+  </div>
+  <div class="col-md-2">
+    <select class="form-control" [(ngModel)]="filter.add" name="add">
+      <option [ngValue]="undefined">所有操作</option>
+      <option [ngValue]="true">添加</option>
+      <option [ngValue]="false">删除</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <input type="date" class="border p-1 rounded"  [(ngModel)]="filter.dateFrom" name="dateFrom"/>
+  </div>
+  <div class="col-md-2">
+    <input type="date" class="border p-1 rounded"  [(ngModel)]="filter.dateTo" name="dateTo"/>
+  </div>
+  <div class="col-md-12 mt-2">
+    <button class="btn btn-primary" (click)="pageChanged()">搜索</button>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th (click)="onSort('logDate')" style="cursor:pointer">
+        日期
+        <i *ngIf="sortColumn==='logDate'" class="fas" [ngClass]="sortDirection==='asc'?'fa-sort-up':'fa-sort-down'"></i>
+        <i *ngIf="sortColumn!=='logDate'" class="fas fa-sort"></i>
+      </th>
+      <th (click)="onSort('productCode')" style="cursor:pointer">
+        型号
+        <i *ngIf="sortColumn==='productCode'" class="fas" [ngClass]="sortDirection==='asc'?'fa-sort-up':'fa-sort-down'"></i>
+        <i *ngIf="sortColumn!=='productCode'" class="fas fa-sort"></i>
+      </th>
+      <th (click)="onSort('materialName')" style="cursor:pointer">
+        材料
+        <i *ngIf="sortColumn==='materialName'" class="fas" [ngClass]="sortDirection==='asc'?'fa-sort-up':'fa-sort-down'"></i>
+        <i *ngIf="sortColumn!=='materialName'" class="fas fa-sort"></i>
+      </th>
+      <th (click)="onSort('colorName')" style="cursor:pointer">
+        颜色
+        <i *ngIf="sortColumn==='colorName'" class="fas" [ngClass]="sortDirection==='asc'?'fa-sort-up':'fa-sort-down'"></i>
+        <i *ngIf="sortColumn!=='colorName'" class="fas fa-sort"></i>
+      </th>
+         <th (click)="onSort('action')" style="cursor:pointer">
+        操作
+        <i *ngIf="sortColumn==='action'" class="fas" [ngClass]="sortDirection==='asc'?'fa-sort-up':'fa-sort-down'"></i>
+        <i *ngIf="sortColumn!=='action'" class="fas fa-sort"></i>
+      </th>
+      <th (click)="onSort('amount')" style="cursor:pointer">
+        数量
+        <i *ngIf="sortColumn==='amount'" class="fas" [ngClass]="sortDirection==='asc'?'fa-sort-up':'fa-sort-down'"></i>
+        <i *ngIf="sortColumn!=='amount'" class="fas fa-sort"></i>
+      </th>
+      <th>图片</th>
+      <th class="text-end">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let log of logs">
+      <td>{{ log.logDate | date:'yyyy-MM-dd' }}</td>
+      <td>{{ log.productName }}</td>
+      <td>{{ log.materialName }}</td>
+      <td>{{ log.colorName }}</td>
+      <td [class]="log.action">{{ log.action }}</td>
+      <td>{{ log.amount }}</td>
+      <td>
+        <img *ngIf="log.imageUrl" [src]="log.imageUrl" alt="Log Image" class="img-thumbnail" style="width:50px;cursor:pointer"
+             (click)="openImage(log.imageUrl)">
+      </td>
+           <td class="text-end">
+             <button class="btn btn-sm btn-outline-danger" (click)="undoLog(log.id)" title="撤销">
+          <i class="fas fa-undo"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ngb-pagination [collectionSize]="totalItems"
+                [(page)]="page"
+                [pageSize]="size"
+                [maxSize]="5"
+                [rotate]="true"
+                (pageChange)="pageChanged()">
+</ngb-pagination>
+
+<!-- 🔹 大图预览 Modal -->
+<div class="image-modal" *ngIf="previewImage" (click)="closeImage()">
+    <img [src]="previewImage" class="modal-img">
+</div>
