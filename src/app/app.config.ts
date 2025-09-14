@@ -8,10 +8,13 @@ import {httpInterceptorProviders} from "./interceptor/http.interceptor";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Nora from '@primeuix/themes/nora';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
-    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(HttpClientModule,  NgxEchartsModule.forRoot({
+        echarts: () => import('echarts')
+      })),
     httpInterceptorProviders,
     provideAnimationsAsync(),
         providePrimeNG({

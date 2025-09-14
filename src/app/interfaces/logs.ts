@@ -10,9 +10,16 @@ export interface LogFilter {
 }
 export interface Log {
   id:number;
-  logDate?: string;   // ISO string
+  logDate: string;   // ISO string
   action: string;
-  amount?: number;
+  amount: number;
+  colorName: string;
+  materialName: string;
+  productName: string;
+  imageUrl: string;
+}
+export interface LogStat {
+  amount: number;
   colorName: string;
   materialName: string;
   productName: string;

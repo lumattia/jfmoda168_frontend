@@ -1,4 +1,4 @@
 export interface IdName {
-  id:number,
+  id:number|string,
   name:string,
 }

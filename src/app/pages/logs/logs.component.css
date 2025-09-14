@@ -17,9 +17,9 @@
   border: 4px solid white;
   border-radius: 6px;
 }
-.添加{
+.入库{
     color:red
 }
-.移除{
+.出库{
     color:blue
 }

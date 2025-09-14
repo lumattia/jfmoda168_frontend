@@ -1,1 +1,50 @@
-<p>reports works!</p>
+<div style="padding: 20px;">
+  <!-- 日期选择器 -->
+  <p-datepicker
+    selectionMode="range"
+    [(ngModel)]="date"
+    [readonlyInput]="true"
+    (onSelect)="fetchData()"
+  />
+
+  <!-- Group By 按钮组 -->
+  <p-selectbutton
+    [options]="groupOption"
+    optionLabel="name" optionValue="id"
+    (onChange)="setGroupBy($event.value)"
+  ></p-selectbutton>
+
+  <!-- 表格 -->
+  <p-table [value]="groupedData" [loading]="loading" class="p-mt-3" 
+  scrollHeight="500px" >
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngIf="groupBy === 'product' || groupBy === 'material' || groupBy === 'color'">产品</th>
+        <th *ngIf="groupBy === 'material' || groupBy === 'color'">布料</th>
+        <th *ngIf="groupBy === 'color'">颜色</th>
+        <th>数量</th>
+        <th *ngIf="groupBy === 'color'">图片</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td *ngIf="groupBy === 'product' || groupBy === 'material' || groupBy === 'color'">
+          {{ item.productName }}
+        </td>
+        <td *ngIf="groupBy === 'material' || groupBy === 'color'">
+          {{ item.materialName }}
+        </td>
+        <td *ngIf="groupBy === 'color'">
+          {{ item.colorName }}
+        </td>
+        <td>{{ item.amount }}</td>
+        <td *ngIf="groupBy === 'color'">
+          <img *ngIf="item.colorImg" [src]="item.colorImg" alt="color" width="30" height="30" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- 图表 -->
+  <div echarts [options]="chartOptions" style="height: 400px; margin-top: 20px;"></div>
+</div>

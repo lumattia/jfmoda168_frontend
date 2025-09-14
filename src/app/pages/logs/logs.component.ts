@@ -43,9 +43,9 @@ export class LogsComponent {
   translateAction(action: string): string {
     switch (action) {
       case 'ADD':
-        return '添加';
+        return '入库';
       case 'REMOVE':
-        return '移除';
+        return '出库';
       default:
         return action;
     }

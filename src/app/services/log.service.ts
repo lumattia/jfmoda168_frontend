@@ -36,6 +36,18 @@ export class LogService {
     });
   return this.http.get<any>(`${LOGURL}/page`, { params });
 }
+   report(
+    filter: LogFilter
+  ): Observable<any> {
+    let params = new HttpParams();
+
+     Object.entries(filter).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        params = params.set(key, value.toString());
+      }
+    });
+  return this.http.get<any>(`${LOGURL}/stat`, { params });
+}
   undo(id: number): Observable<any> {
     return this.http.delete<any>(`${LOGURL}/${id}/undo`);
   }
