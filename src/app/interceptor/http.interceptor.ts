@@ -19,15 +19,14 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 0 && error.error instanceof ProgressEvent) {
-          return throwError(()=>"Something has gone wrong");
+          return throwError(() => "出现了网络错误，请稍后再试"); 
         }
-        let errorMessage = 'Ha ocurrido un error en la aplicación';
+        let errorMessage = '应用程序发生错误';
         if (error.error instanceof ErrorEvent) {
-          // Error del lado del cliente
-          errorMessage = `Error: ${error.error.message}`;
+          errorMessage = `${error.error.message}`;
         } else {
-          // Error del lado del servidor
-          errorMessage = `Código de error: ${error.status}, mensaje: ${error.error}`;
+          console.log(error)
+          errorMessage = `${error.error}`;
         }
         return throwError(()=>errorMessage);
       })
