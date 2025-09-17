@@ -1,12 +1,25 @@
 <div style="padding: 20px;">
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
   <!-- 日期选择器 -->
   <p-datepicker
     selectionMode="range"
     [(ngModel)]="date"
     [readonlyInput]="true"
     (onSelect)="fetchData()"
-  />
+  ></p-datepicker>
 
+  <!-- 产品名输入 + 搜索按钮 -->
+  <div style="display: flex; align-items: center; gap: 5px; flex: 1;">
+    <input 
+      class="form-control" 
+      placeholder="产品名" 
+      [(ngModel)]="filter.productCode" 
+      name="productCode" 
+      style="height: 38px; flex: 1; padding: 0 10px;"
+    />
+    <button class="btn btn-primary" (click)="fetchData()" style="height: 38px;">搜索</button>
+  </div>
+</div>
   <!-- Group By 按钮组 -->
   <p-selectbutton
     [options]="groupOption"
@@ -39,7 +52,8 @@
         </td>
         <td>{{ item.amount }}</td>
         <td *ngIf="groupBy === 'color'">
-          <img *ngIf="item.colorImg" [src]="item.colorImg" alt="color" width="30" height="30" />
+          <img *ngIf="item.colorImg" [src]="item.colorImg" alt="color" width="30" height="30" style="cursor:pointer" (click)="openImage(item.colorImg)"/>
+          
         </td>
       </tr>
     </ng-template>
@@ -47,4 +61,9 @@
 
   <!-- 图表 -->
   <div echarts [options]="chartOptions" style="height: 400px; margin-top: 20px;"></div>
+</div>
+
+<!-- 🔹 大图预览 Modal -->
+<div class="image-modal" *ngIf="previewImage" (click)="closeImage()">
+    <img [src]="previewImage" class="modal-img">
 </div>

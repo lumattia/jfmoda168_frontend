@@ -34,6 +34,8 @@ export class ReportsComponent {
   chartOptions: any;
 
 
+  previewImage?: string;
+
   constructor(private logService: LogService) {}
 
   ngOnInit() {
@@ -108,5 +110,12 @@ export class ReportsComponent {
       yAxis: { type: 'value' },
       series: [{ type: 'bar', data: this.groupedData.map(d => d.amount) }]
     };
+  }
+    openImage(color: any) {
+    this.previewImage = color;
+  }
+
+  closeImage() {
+    this.previewImage = undefined;
   }
 }
